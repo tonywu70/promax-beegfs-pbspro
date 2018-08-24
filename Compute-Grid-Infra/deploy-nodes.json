@@ -148,6 +148,12 @@
         "description": "Name of master VM name"
       }
     },
+     "nFScerverName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of master VM name"
+      }
+    },
      "vnetName": {
       "type": "string",
       "metadata": {
