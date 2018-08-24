@@ -189,6 +189,7 @@
       "vnetName": "[parameters('vnetName')]",
       "subnetName": "[parameters('Computesubnet')]",
       "MasterName": "[parameters('masterName')]",
+      "nfsservername": "[parameters('nfsServerName')]",
       "storageAccountType": "Standard_LRS",
       "sharedStorage": "[parameters('sharedStorage')]",
       "scheduler": "[parameters('scheduler')]",
