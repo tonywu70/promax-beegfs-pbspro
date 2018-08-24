@@ -148,7 +148,7 @@
         "description": "Name of master VM name"
       }
     },
-     "nFScerverName": {
+     "nFSserverName": {
       "type": "string",
       "metadata": {
         "description": "Name of master VM name"
