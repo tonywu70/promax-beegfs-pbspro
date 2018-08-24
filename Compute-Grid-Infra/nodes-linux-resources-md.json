@@ -78,6 +78,9 @@
       },
       "master": {
         "params": "[concat(' -m ', parameters('nodeSettings').MasterName)]"
+      },      
+      "nfsservername": {
+        "params": "[concat(' -k ', parameters('nodeSettings').nfsservername)]"
       },
       "postinstall": {
         "params": "[concat(' -c ', parameters('postInstallCommand'))]"
@@ -92,7 +95,7 @@
         "[uri(deployment().properties.templateLink.uri, 'PBSPro/pbs_selfregister.sh')]",
         "[uri(deployment().properties.templateLink.uri, 'Ganglia/install_ganglia.sh')]"
       ],
-      "commandToExecute": "[concat('bash ', variables('cnSetupScript'), variables('ScriptsOptions')['master'].params, variables('ScriptsOptions')[parameters('nodeSettings').scheduler].params, variables('ScriptsOptions')[parameters('nodeSettings').sharedStorage].params, variables('ScriptsOptions')[parameters('nodeSettings').monitoring].params, variables('ScriptsOptions')['postinstall'].params)]"
+      "commandToExecute": "[concat('bash ', variables('cnSetupScript'), variables('ScriptsOptions')['master'].params, variables('ScriptsOptions')['nfsservername'].params,variables('ScriptsOptions')[parameters('nodeSettings').scheduler].params, variables('ScriptsOptions')[parameters('nodeSettings').sharedStorage].params, variables('ScriptsOptions')[parameters('nodeSettings').monitoring].params, variables('ScriptsOptions')['postinstall'].params)]"
     },
     "sshKeyPath": "[concat('/home/',parameters('nodeOSSettings').adminUserName,'/.ssh/authorized_keys')]"
   },
