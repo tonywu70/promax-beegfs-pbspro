@@ -18,9 +18,9 @@ log()
 	echo "$1"
 }
 
-usage() { echo "Usage: $0 [-m <masterName>] [-s <pbspro>] [-q <queuename>] [-S <beegfs, nfsonmaster>] [-n <ganglia>] [-c <postInstallCommand>]" 1>&2; exit 1; }
+usage() { echo "Usage: $0 [-m <masterName>] [-k <nfsservername>] [-s <pbspro>] [-q <queuename>] [-S <beegfs, nfsonmaster>] [-n <ganglia>] [-c <postInstallCommand>]" 1>&2; exit 1; }
 
-while getopts :m:S:s:q:n:c: optname; do
+while getopts :m:S:s:q:n:c:k: optname; do
   log "Option $optname set with value ${OPTARG}"
   
   case $optname in
@@ -32,6 +32,9 @@ while getopts :m:S:s:q:n:c: optname; do
 		;;
     s)  # Scheduler (pbspro)
 		export SCHEDULER=${OPTARG}
+		;;
+	k)  # NFSserver name
+		export NFS_SERVER_NAME=${OPTARG}
 		;;
     n)  # monitoring
 		export MONITORING=${OPTARG}
@@ -80,11 +83,11 @@ mount_nfs()
 	
 	mkdir -p ${NFS_MOUNT}
 
-	log "mounting NFS on " ${MASTER_NAME}
-	showmount -e ${MASTER_NAME}
-	mount -t nfs ${MASTER_NAME}:${NFS_ON_MASTER} ${NFS_MOUNT}
+	log "mounting NFS on " ${NFS_SERVER_NAME}
+	showmount -e ${NFS_SERVER_NAME}
+	mount -t nfs ${NFS_SERVER_NAME}:${NFS_ON_MASTER} ${NFS_MOUNT}
 	
-	echo "${MASTER_NAME}:${NFS_ON_MASTER} ${NFS_MOUNT} nfs defaults,nofail  0 0" >> /etc/fstab
+	echo "${NFS_SERVER_NAME}:${NFS_ON_MASTER} ${NFS_MOUNT} nfs defaults,nofail  0 0" >> /etc/fstab
 }
 
 install_beegfs_client()
