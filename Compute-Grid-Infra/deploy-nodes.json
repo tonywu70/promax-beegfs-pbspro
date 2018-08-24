@@ -145,13 +145,13 @@
     "masterName": {
       "type": "string",
       "metadata": {
-        "description": "Name of VM name where NFS server is installed"
+        "description": "Name of master VM name"
       }
     },
      "nfsServerName": {
       "type": "string",
       "metadata": {
-        "description": "Name of master VM name"
+        "description": "Name of VM name where NFS server is installed"
       }
     },
      "vnetName": {
