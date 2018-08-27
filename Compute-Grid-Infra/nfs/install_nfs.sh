@@ -92,7 +92,8 @@ EOF
 }
 
 setup_disks()
-{      
+{  
+	yum install xfsprogs xfsdump -y
     # Dump the current disk config for debugging
     fdisk -l
     
