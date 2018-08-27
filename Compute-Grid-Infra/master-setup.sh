@@ -99,10 +99,15 @@ mount_nfs()
 	yum -y install nfs-utils nfs-utils-lib
 
     echo "$SHARE_HOME    *(rw,async,no_root_squash)" >> /etc/exports
-    systemctl enable rpcbind || echo "Already enabled"
-    systemctl enable nfs-server || echo "Already enabled"
-    systemctl start rpcbind || echo "Already enabled"
-    systemctl start nfs-server || echo "Already enabled"
+    #systemctl enable rpcbind || echo "Already enabled"
+    #systemctl enable nfs-server || echo "Already enabled"
+    #systemctl start rpcbind || echo "Already enabled"
+    #systemctl start nfs-server || echo "Already enabled"
+
+	service rpcbind enable 
+	service nfs enable 
+	service rpcbind start
+	service nfs start
 		
 }
 
