@@ -133,6 +133,10 @@
         "uri": "[uri(deployment().properties.templateLink.uri, 'storage-none.json')]",
         "params": ""
       },
+      "otherstorage": {
+        "uri": "[uri(deployment().properties.templateLink.uri, 'otherstorage/otherstorage.json')]",
+        "params": ""
+      },
       "beegfs": {
         "uri": "[uri(deployment().properties.templateLink.uri, 'BeeGFS/beegfs-script.json')]",
         "params": "[concat(parameters('masterSettings').Name, ' client')]"
