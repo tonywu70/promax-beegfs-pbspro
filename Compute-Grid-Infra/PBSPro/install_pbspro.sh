@@ -44,6 +44,11 @@ install_pkgs()
     yum -y install epel-release
     yum -y install zlib zlib-devel bzip2 bzip2-devel bzip2-libs openssl openssl-devel openssl-libs gcc gcc-c++ nfs-utils rpcbind mdadm wget python-pip
 }
+set-hostname()
+{
+	addrs=( $(arp -ni eth0 | grep -o '^[0-9][^ ]*') )
+	hostname host-"${addrs[0]}"
+}
 
 # Downloads and installs PBS Pro OSS on the node.
 # Starts the PBS Pro control daemon on the master node and
@@ -148,7 +153,7 @@ if [ -e "$SETUP_MARKER" ]; then
     echo "We're already configured, exiting..."
     exit 0
 fi
-
+set-hostname
 install_pbspro
 
 # Create marker file so we know we're configured
