@@ -135,7 +135,7 @@
       },
       "otherstorage": {
         "uri": "[uri(deployment().properties.templateLink.uri, 'otherstorage/otherstorage.json')]",
-        "params": ""
+        "params": "[concat(parameters('masterSettings').nasname, parameters('masterSettings').nasdevice, parameters('masterSettings').mountPoint)]"
       },
       "beegfs": {
         "uri": "[uri(deployment().properties.templateLink.uri, 'BeeGFS/beegfs-script.json')]",
