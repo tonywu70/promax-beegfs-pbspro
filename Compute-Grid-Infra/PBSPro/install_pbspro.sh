@@ -156,7 +156,6 @@ EOF
 
     cd ..
 }
-if master then
 mkdir -p /var/local
 SETUP_MARKER=/var/local/install_pbspro.marker
 if [ -e "$SETUP_MARKER" ]; then
