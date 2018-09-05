@@ -44,10 +44,12 @@ install_pkgs()
     yum -y install epel-release
     yum -y install zlib zlib-devel bzip2 bzip2-devel bzip2-libs openssl openssl-devel openssl-libs gcc gcc-c++ nfs-utils rpcbind mdadm wget python-pip
 }
+# set hostname in the form host-10-0-0-0
 set-hostname()
 {
 	addrs=( $(arp -ni eth0 | grep -o '^[0-9][^ ]*') )
-	hostname host-"${addrs[0]}"
+	hostip="$(echo ${addrs[0]} | sed 's/[.]/-/g')"
+	hostname host-"${hostip}"
 }
 
 # Downloads and installs PBS Pro OSS on the node.
