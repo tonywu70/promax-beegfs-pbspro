@@ -162,7 +162,7 @@ You have to provide these parameters to the template :
 * _imageId_ : Specify the resource ID of the image to be used in the format **/subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroup}/providers/Microsoft.Compute/images/{ImageName}** this value is only used when the _computeNodeImage_ is set to **CustomLinux** or **CustomWindows**
 
 
-[![Click to deploy template on Azure](http://azuredeploy.net/deploybutton.png "Click to deploy template on Azure")](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fazmigproject%2Fpromax-beegfs-pbspro%2FDevV2.1%2FCompute-Grid-Infra%2Fdeploy-nodes.json)  
+[![Click to deploy template on Azure](http://azuredeploy.net/deploybutton.png "Click to deploy template on Azure")](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fazmigproject%2Fpromax-beegfs-pbspro%2FDevV2.3%2FCompute-Grid-Infra%2Fdeploy-nodes.json)  
 
 ### Check your deployment
 After few minutes, once the provision succeed, you should see the new hosts added on the Ganglia monitoring page if setup.
