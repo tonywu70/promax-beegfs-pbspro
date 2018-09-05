@@ -18,9 +18,9 @@ log()
 	echo "$1"
 }
 
-usage() { echo "Usage: $0 [-m <masterName>] [-k <nfsservername>] [-s <pbspro>] [-q <queuename>] [-S <beegfs, nfsonmaster, otherstorage>] [-n <ganglia>] [-c <postInstallCommand>]" 1>&2; exit 1; }
+usage() { echo "Usage: $0 [-m <masterName>] [-k <nfsservername>] [-x <nasname>] [-y <nasdevice>] [-z <nasmount>] [-s <pbspro>] [-q <queuename>] [-S <beegfs, nfsonmaster, otherstorage>] [-n <ganglia>] [-c <postInstallCommand>]" 1>&2; exit 1; }
 
-while getopts :m:S:s:q:n:c:k: optname; do
+while getopts :m:S:s:q:n:c:k:x:y:z: optname; do
   log "Option $optname set with value ${OPTARG}"
   
   case $optname in
@@ -103,9 +103,9 @@ install_beegfs_client()
 {
 	bash install_beegfs.sh ${MASTER_NAME} "client"
 }
-install_beegfs_otherstorage()
+install_otherstorage()
 {
-	bash other_nas.sh ${MASTER_NAME} "client"
+	bash other_nas.sh ${NAS_NAME} ${NAS_DEVICE} ${NAS_MOUNT}
 }
 
 install_ganglia()
@@ -209,7 +209,7 @@ if [ "$SHARED_STORAGE" == "beegfs" ]; then
 elif [ "$SHARED_STORAGE" == "nfsonmaster" ]; then
 	mount_nfs
 elif [ "$SHARED_STORAGE" == "otherstorage" ]; then
-	
+	install_otherstorage
 fi
 
 setup_intel_mpi
