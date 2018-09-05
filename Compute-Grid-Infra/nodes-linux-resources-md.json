@@ -70,6 +70,9 @@
       "beegfs": {
         "params": " -S beegfs"
       },
+       "otherstorage": {        
+        "params": "-S otherstorage"
+      },
       "ganglia": {
         "params": " -n ganglia"
       },
@@ -78,7 +81,16 @@
       },
       "master": {
         "params": "[concat(' -m ', parameters('nodeSettings').MasterName)]"
-      },      
+      },
+      "nasname": {
+        "params": "[concat(' -x ', parameters('nodeSettings').nasname)]"
+      },
+      "nasdevice": {
+        "params": "[concat(' -y ', parameters('nodeSettings').nasdevice)]"
+      }, 
+      "nasmount": {
+        "params": "[concat(' -z ', parameters('nodeSettings').mountPoint)]"
+      },       
       "nfsservername": {
         "params": "[concat(' -k ', parameters('nodeSettings').nfsservername)]"
       },
@@ -92,10 +104,11 @@
         "[uri(deployment().properties.templateLink.uri, variables('cnSetupScript'))]",
         "[uri(deployment().properties.templateLink.uri, 'BeeGFS/install_beegfs.sh')]",
         "[uri(deployment().properties.templateLink.uri, 'PBSPro/install_pbspro.sh')]",
-        "[uri(deployment().properties.templateLink.uri, 'PBSPro/pbs_selfregister.sh')]",
+        "[uri(deployment().properties.templateLink.uri, 'PBSPro/install_pbspro.sh')]",
+        "[uri(deployment().properties.templateLink.uri, 'otherstorage/other_nas.sh')]",
         "[uri(deployment().properties.templateLink.uri, 'Ganglia/install_ganglia.sh')]"
       ],
-      "commandToExecute": "[concat('bash ', variables('cnSetupScript'), variables('ScriptsOptions')['master'].params, variables('ScriptsOptions')['nfsservername'].params,variables('ScriptsOptions')[parameters('nodeSettings').scheduler].params, variables('ScriptsOptions')[parameters('nodeSettings').sharedStorage].params, variables('ScriptsOptions')[parameters('nodeSettings').monitoring].params, variables('ScriptsOptions')['postinstall'].params)]"
+      "commandToExecute": "[concat('bash ', variables('cnSetupScript'), variables('ScriptsOptions')['master'].params, variables('ScriptsOptions')['nfsservername'].params, variables('ScriptsOptions')['nasname'].params, variables('ScriptsOptions')['nasdevice'].params, variables('ScriptsOptions')['nasmount'].params, variables('ScriptsOptions')[parameters('nodeSettings').scheduler].params, variables('ScriptsOptions')[parameters('nodeSettings').sharedStorage].params, variables('ScriptsOptions')[parameters('nodeSettings').monitoring].params, variables('ScriptsOptions')['postinstall'].params)]"
     },
     "sshKeyPath": "[concat('/home/',parameters('nodeOSSettings').adminUserName,'/.ssh/authorized_keys')]"
   },
