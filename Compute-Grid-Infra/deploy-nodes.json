@@ -51,11 +51,33 @@
       "allowedValues": [
         "none",
         "beegfs",
-        "nfsonmaster"
+        "nfsonmaster",
+         "otherstorage"
       ],
       "metadata": {
         "description": "specify the shared storage to be used. beegfs=> beegfs cluster, nfsonmaster=> nfs share on the master"
       }
+    },
+    "nasName": {
+      "type": "string",
+      "metadata": {
+        "description": "Provide NAS name"
+      },
+      "maxLength": 15
+    },
+    "nasDevice": {
+      "type": "string",
+      "metadata": {
+        "description": "Provide nas device name"
+      },
+      "maxLength": 15
+    },
+    "nasMountPoint": {
+      "type": "string",
+      "metadata": {
+        "description": "Provide mount point"  
+      },
+      "maxLength": 15
     },
     "scheduler": {
       "type": "string",
@@ -194,6 +216,9 @@
       "nfsservername": "[parameters('nfsServerName')]",
       "storageAccountType": "Standard_LRS",
       "sharedStorage": "[parameters('sharedStorage')]",
+      "nasname": "[parameters('nasName')]",
+      "nasdevice": "[parameters('nasDevice')]",
+      "mountPoint": "[parameters('nasMountPoint')]",
       "scheduler": "[parameters('scheduler')]",
       "monitoring": "[parameters('monitoring')]"
     },
