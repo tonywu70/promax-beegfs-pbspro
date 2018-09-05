@@ -80,7 +80,7 @@ HPC_GID=7007
 
 #        if [ "$filesystem" == "xfs" ]; then
 #            mkfs -t $filesystem /dev/$raidDevice
-            echo "$nasname:$nasdevice $mountPoint  rw,noatime,attr2,_netdev,defaults,sunit=1024,swidth=4096,nofail 0 2" >> /etc/fstab
+            echo "$nasname:$nasdevice $mountPoint  nfs rsize=65536,wsize=65536,_netdev,nofail 0 0" >> /etc/fstab
 #        else
 #            mkfs.ext4 -i 2048 -I 512 -J size=400 -Odir_index,filetype /dev/$raidDevice
 #            sleep 5
