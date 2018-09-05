@@ -18,7 +18,7 @@ log()
 	echo "$1"
 }
 
-usage() { echo "Usage: $0 [-m <masterName>] [-k <nfsservername>] [-s <pbspro>] [-q <queuename>] [-S <beegfs, nfsonmaster>] [-n <ganglia>] [-c <postInstallCommand>]" 1>&2; exit 1; }
+usage() { echo "Usage: $0 [-m <masterName>] [-k <nfsservername>] [-s <pbspro>] [-q <queuename>] [-S <beegfs, nfsonmaster, otherstorage>] [-n <ganglia>] [-c <postInstallCommand>]" 1>&2; exit 1; }
 
 while getopts :m:S:s:q:n:c:k: optname; do
   log "Option $optname set with value ${OPTARG}"
@@ -41,6 +41,15 @@ while getopts :m:S:s:q:n:c:k: optname; do
 		;;
     c)  # post install command
 		export POST_INSTALL_COMMAND=${OPTARG}
+		;;
+	x)  # nas name
+		export NAS_NAME=${OPTARG}
+		;;
+	y)  # nas device
+		export NAS_DEVICE=${OPTARG}
+		;;
+	z)  # mount point
+		export NAS_MOUNT=${OPTARG}
 		;;
     q)  # queue name
 		export QNAME=${OPTARG}
@@ -93,6 +102,10 @@ mount_nfs()
 install_beegfs_client()
 {
 	bash install_beegfs.sh ${MASTER_NAME} "client"
+}
+install_beegfs_otherstorage()
+{
+	bash other_nas.sh ${MASTER_NAME} "client"
 }
 
 install_ganglia()
@@ -195,6 +208,8 @@ if [ "$SHARED_STORAGE" == "beegfs" ]; then
 	install_beegfs_client
 elif [ "$SHARED_STORAGE" == "nfsonmaster" ]; then
 	mount_nfs
+elif [ "$SHARED_STORAGE" == "otherstorage" ]; then
+	
 fi
 
 setup_intel_mpi
