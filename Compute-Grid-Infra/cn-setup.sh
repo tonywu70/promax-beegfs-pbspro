@@ -18,9 +18,9 @@ log()
 	echo "$1"
 }
 
-usage() { echo "Usage: $0 [-m <masterName>] [-k <nfsservername>] [-x <nasname>] [-y <nasdevice>] [-z <nasmount>] [-s <pbspro>] [-q <queuename>] [-S <beegfs, nfsonmaster, otherstorage>] [-n <ganglia>] [-c <postInstallCommand>]" 1>&2; exit 1; }
+usage() { echo "Usage: $0 [-m <masterName>] [-k <nfsservername>] [-x <nasname>] [-y <nasdevice>] [-z <nasmount>] [-f <dnsServerName>] [-g <dnsServerIP>] [-s <pbspro>] [-q <queuename>] [-S <beegfs, nfsonmaster, otherstorage>] [-n <ganglia>] [-c <postInstallCommand>]" 1>&2; exit 1; }
 
-while getopts :m:S:s:q:n:c:k:x:y:z: optname; do
+while getopts :m:S:s:q:n:c:k:x:y:z:f:g: optname; do
   log "Option $optname set with value ${OPTARG}"
   
   case $optname in
@@ -50,6 +50,12 @@ while getopts :m:S:s:q:n:c:k:x:y:z: optname; do
 		;;
 	z)  # mount point
 		export NAS_MOUNT=${OPTARG}
+		;;
+	f)  # dns name
+		export DNS_NAME=${OPTARG}
+		;;
+	g)  # dns ip
+		export DNS_IP=${OPTARG}
 		;;
     q)  # queue name
 		export QNAME=${OPTARG}
@@ -115,7 +121,7 @@ install_ganglia()
 
 install_pbspro()
 {
-	bash install_pbspro.sh ${MASTER_NAME} ${QNAME}
+	bash install_pbspro.sh ${MASTER_NAME} ${QNAME} ${DNS_NAME} ${DNS_IP}
 }
 
 install_blobxfer()
