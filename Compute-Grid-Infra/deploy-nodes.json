@@ -182,6 +182,8 @@
   "variables": {
     "location": "[resourceGroup().location]",
     "newStorageAccountSuffix": "[toLower(parameters('vmSSPrefix'))]",
+    "longNamingInfix": "[toLower(parameters('vmSSPrefix'))]",
+    "vmSSPrefix": "[concat('mb', variables('longNamingInfix'))]",
     "deploymentApiVersion": "2015-11-01",
     "nodeSettings": {
       "VMsku": "[parameters('VMsku')]",
@@ -334,7 +336,7 @@
             "value": "[variables('nodeOSSettings')]"
           },
           "vmSSName": {
-            "value": "[concat(parameters('vmSSPrefix'), padLeft(copyindex(), 2, '0'))]"
+            "value": "[concat(variables('vmSSPrefix'), padLeft(copyindex(), 2, '0'))]"
           },
           "instanceCount": {
             "value": "[parameters('instanceCountPerVMSS')]"
