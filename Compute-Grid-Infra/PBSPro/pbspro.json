@@ -36,7 +36,7 @@
           "timestamp": 12345
         },
         "protectedSettings": {
-          "commandToExecute": "[concat('bash install_pbspro.sh ', parameters('masterName'),' ', parameters('dnsServerName'),' ', parameters('dnsServerIP'))]"
+          "commandToExecute": "[concat('bash install_pbspro.sh ', parameters('masterName'),' ','workq',' ', parameters('dnsServerName'),' ', parameters('dnsServerIP'))]"
         }
       }
     }
