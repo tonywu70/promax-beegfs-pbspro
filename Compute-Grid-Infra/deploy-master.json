@@ -186,7 +186,7 @@
       "vnetRG": "[parameters('RGname')]",
       "nsgName": "nsg-master"
     },
-    "masterBoxName": "['mb', concat(variables('longNamingInfix'))]",
+    "masterBoxName": "[concat('mb', variables('longNamingInfix'))]",
     "masterSettings": {
       "Name": "[variables('masterBoxName')]",
       "DiagSAName": "[concat(uniqueString(concat(resourceGroup().id, variables('newStorageAccountSuffix'), 'masterboxsadiag')), 'diag')]",
