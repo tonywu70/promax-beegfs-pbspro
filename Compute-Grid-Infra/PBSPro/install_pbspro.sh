@@ -37,7 +37,7 @@ set_DNS()
 	echo "domain $DNS_SERVER_NAME">>/etc/resolv.conf
 	echo "nameserver $DNS_SERVER_IP">>/etc/resolv.conf
 }
-
+set_DNS
 enable_kernel_update()
 {
 	# enable kernel update
@@ -156,6 +156,7 @@ EOF
 
     cd ..
 }
+
 mkdir -p /var/local
 SETUP_MARKER=/var/local/install_pbspro.marker
 if [ -e "$SETUP_MARKER" ]; then
