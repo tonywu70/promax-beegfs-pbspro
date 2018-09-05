@@ -155,7 +155,7 @@ if [ -e "$SETUP_MARKER" ]; then
     echo "We're already configured, exiting..."
     exit 0
 fi
-set-hostname
+#set-hostname
 install_pbspro
 
 # Create marker file so we know we're configured
