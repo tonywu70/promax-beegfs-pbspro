@@ -114,7 +114,7 @@ EOF
 		/opt/pbs/bin/qmgr -c 'list server'
     else
 
-
+		set-hostname
 		yum install -y hwloc-devel expat-devel tcl-devel expat
 
 
@@ -156,14 +156,14 @@ EOF
 
     cd ..
 }
-
+if master then
 mkdir -p /var/local
 SETUP_MARKER=/var/local/install_pbspro.marker
 if [ -e "$SETUP_MARKER" ]; then
     echo "We're already configured, exiting..."
     exit 0
 fi
-set_DNS
+
 #set-hostname
 install_pbspro
 
