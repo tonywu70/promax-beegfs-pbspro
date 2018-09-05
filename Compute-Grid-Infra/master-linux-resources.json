@@ -268,7 +268,9 @@
         },
         "parameters": {
           "vmName": { "value": "[parameters('masterSettings').Name]" },
-          "masterName": { "value": "[parameters('masterSettings').Name]" }
+          "masterName": { "value": "[parameters('masterSettings').Name]" },
+          "dnsServerName": { "value": "[parameters('masterSettings').dnsServerName]" },
+           "dnsServerIP": { "value": "[parameters('masterSettings').dnsServerIP]" }
         }
       }
     },

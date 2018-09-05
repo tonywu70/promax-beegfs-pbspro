@@ -65,9 +65,23 @@
     "nasMountPoint": {
       "type": "string",
       "metadata": {
-        "description": "Provide mount point"  
+        "description": "Provide mount point"
       },
       "maxLength": 15
+    },
+    "dnsServerName": {
+      "type": "string",
+      "metadata": {
+        "description": "DNS server name"
+      },
+      "maxLength": 40
+    },
+    "dnsServerIP": {
+      "type": "string",
+      "metadata": {
+        "description": "DNS server ip"  
+      },
+      "maxLength": 20
     },
     "dataDiskSize": {
       "type": "string",
@@ -200,6 +214,8 @@
        "nasname": "[parameters('nasName')]",
       "nasdevice": "[parameters('nasDevice')]",
       "mountPoint": "[parameters('nasMountPoint')]",
+      "dnsServerName": "[parameters('dnsServerName')]",
+      "dnsServerIP": "[parameters('dnsServerIP')]",
       "scheduler": "[parameters('scheduler')]",
       "dataDiskSize": "[parameters('dataDiskSize')]",
       "nbDataDisks": "[parameters('nbDataDisks')]"

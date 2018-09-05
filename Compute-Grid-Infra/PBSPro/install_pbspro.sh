@@ -14,6 +14,8 @@ fi
 
 # Set user args
 MASTER_HOSTNAME=$1
+DNS_SERVER_NAME=$3
+DNS_SERVER_IP=$4
 QNAME=workq
 PBS_MANAGER=hpcuser
 
@@ -28,6 +30,12 @@ is_master()
 {
     hostname | grep "$MASTER_HOSTNAME"
     return $?
+}
+set_DNS()
+{
+    sed -i  "s/PEERDNS=yes/PEERDNS=no/g" /etc/sysconfig/network-scripts/ifcfg-eth0
+	echo "domain $DNS_SERVER_NAME">>/etc/resolv.conf
+	echo "nameserver $DNS_SERVER_IP">>/etc/resolv.conf
 }
 
 enable_kernel_update()
@@ -155,6 +163,7 @@ if [ -e "$SETUP_MARKER" ]; then
     echo "We're already configured, exiting..."
     exit 0
 fi
+set_DNS
 #set-hostname
 install_pbspro
 

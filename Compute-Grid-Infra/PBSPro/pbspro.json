@@ -7,6 +7,12 @@
     },
     "masterName": {
       "type": "string"
+    },
+    "dnsServerName": {
+      "type": "string"
+    },
+    "dnsServerIP": {
+      "type": "string"
     }
   },
   "variables": {
@@ -30,7 +36,7 @@
           "timestamp": 12345
         },
         "protectedSettings": {
-          "commandToExecute": "[concat('bash install_pbspro.sh ', parameters('masterName'))]"
+          "commandToExecute": "[concat('bash install_pbspro.sh ', parameters('masterName'),' ', parameters('dnsServerName'),' ', parameters('dnsServerIP'))]"
         }
       }
     }
