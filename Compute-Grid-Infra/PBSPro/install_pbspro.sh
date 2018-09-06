@@ -36,6 +36,9 @@ set_DNS()
     sed -i  "s/PEERDNS=yes/PEERDNS=no/g" /etc/sysconfig/network-scripts/ifcfg-eth0
 	echo "domain $DNS_SERVER_NAME">>/etc/resolv.conf
 	echo "nameserver $DNS_SERVER_IP">>/etc/resolv.conf
+	sed -i  "s/networks:   files/networks:   files dns [NOTFOUND=return]/g"  /etc/nsswitch.conf
+	sed -i  "s/hosts:      files dns/hosts: files dns [NOTFOUND=return]/g"  /etc/nsswitch.conf
+	service network restart
 }
 set_DNS
 enable_kernel_update()
