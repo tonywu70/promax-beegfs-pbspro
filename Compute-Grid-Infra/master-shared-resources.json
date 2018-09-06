@@ -61,7 +61,7 @@
             "name": "[parameters('masterSettings').IPConfigName]",
             "properties": {
               "privateIPAllocationMethod": "Static", 
-               "privateIPAddress": "10.0.0.132",             
+               "privateIPAddress": "10.0.0.135",             
               "subnet": {
                 "id": "[variables('ComputeSubnetRef')]"
               }
