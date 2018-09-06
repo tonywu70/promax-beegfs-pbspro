@@ -60,8 +60,10 @@
           {
             "name": "[parameters('masterSettings').IPConfigName]",
             "properties": {
-              "privateIPAllocationMethod": "Static", 
-               "privateIPAddress": "10.0.0.131",             
+              "privateIPAllocationMethod": "Dynamic", 
+              "publicIPAddress": {
+                "id": "[resourceId('Microsoft.Network/publicIPAddresses',parameters('masterSettings').publicIPAddressName)]"
+              },            
               "subnet": {
                 "id": "[variables('ComputeSubnetRef')]"
               }
