@@ -58,8 +58,8 @@ install_pkgs()
 # set hostname in the form host-10-0-0-0
 set-hostname()
 {
-	SERVER_IP="$(ip addr show ens160 | grep 'inet ' | cut -f2 | awk '{ print $2}')"
-	ip="$(echo $SERVER_IP} | sed 's\/21\\g')"
+	SERVER_IP="$(ip addr show eth0 | grep 'inet ' | cut -f2 | awk '{ print $2}')"
+	ip="$(echo ${SERVER_IP} | sed 's\/21\\g')"
 	hostip="$(echo ${ip} | sed 's/[.]/-/g')"
 	hostname host-"${hostip}"
 }
