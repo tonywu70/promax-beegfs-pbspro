@@ -71,7 +71,7 @@
         "params": " -S beegfs"
       },
        "otherstorage": {        
-        "params": "-S otherstorage"
+        "params": " -S otherstorage"
       },
       "ganglia": {
         "params": " -n ganglia"
