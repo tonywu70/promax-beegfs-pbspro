@@ -133,7 +133,7 @@ install_blobxfer()
 		pip install --upgrade blobxfer
 	fi
 }
-
+echo "${NAS_NAME} ${NAS_DEVICE} ${NAS_MOUNT}"
 setup_user()
 {
 	if is_centos; then
@@ -214,10 +214,10 @@ fi
 if [ "$SHARED_STORAGE" == "beegfs" ]; then
 	install_beegfs_client
 elif [ "$SHARED_STORAGE" == "nfsonmaster" ]; then
-	mount_nfs
+		mount_nfs
 elif [ "$SHARED_STORAGE" == "otherstorage" ]; then
-	echo "other storage is installing"
-	install_otherstorage
+		echo "other storage is installing"
+		install_otherstorage
 fi
 
 setup_intel_mpi
