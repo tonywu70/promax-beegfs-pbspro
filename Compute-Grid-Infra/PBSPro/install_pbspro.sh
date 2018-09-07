@@ -35,8 +35,7 @@ set_DNS()
 {
     sed -i  "s/PEERDNS=yes/PEERDNS=no/g" /etc/sysconfig/network-scripts/ifcfg-eth0
 	sed -i  "s/search reddog.microsoft.com/#search reddog.microsoft.com/g" /etc/resolv.conf	
-	echo "search $DNS_SERVER_NAME">>/etc/resolv.conf
-	echo "nameserver $DNS_SERVER_IP">>/etc/resolv.conf
+	echo "search $DNS_SERVER_NAME">>/etc/resolv.conf	
 	echo "domain $DNS_SERVER_NAME">>/etc/resolv.conf
 	echo "nameserver $DNS_SERVER_IP">>/etc/resolv.conf
 	sed -i  "s/networks:   files/networks:   files dns [NOTFOUND=return]/g"  /etc/nsswitch.conf
