@@ -51,6 +51,7 @@ HPC_GID=7007
     nasname="$1"
     nasdevice="$2"
     mountPoint="$3"
+	echo "$nasname $nasdevice $mountPoint"
 #    raidDevice="$4"
 #    createdPartitions=""
 

@@ -27,7 +27,7 @@ while getopts :m:S:s:q:n:c:k:x:y:z:f:g: optname; do
     m)  # master name
 		export MASTER_NAME=${OPTARG}
 		;;
-    S)  # Shared Storage (beegfs, nfsonmaster)
+    S)  # Shared Storage (beegfs, nfsonmaster, otherstorage)
 		export SHARED_STORAGE=${OPTARG}
 		;;
     s)  # Scheduler (pbspro)
@@ -112,6 +112,7 @@ install_beegfs_client()
 install_otherstorage()
 {
 	bash other_nas.sh ${NAS_NAME} ${NAS_DEVICE} ${NAS_MOUNT}
+	echo "other storage is installed"
 }
 
 install_ganglia()
@@ -215,6 +216,7 @@ if [ "$SHARED_STORAGE" == "beegfs" ]; then
 elif [ "$SHARED_STORAGE" == "nfsonmaster" ]; then
 	mount_nfs
 elif [ "$SHARED_STORAGE" == "otherstorage" ]; then
+	echo "other storage is installing"
 	install_otherstorage
 fi
 
