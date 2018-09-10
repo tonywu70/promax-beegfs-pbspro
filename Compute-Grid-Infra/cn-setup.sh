@@ -19,7 +19,7 @@ log()
 	echo "$1"
 }
 
-usage() { echo "Usage: $0 [-m <masterName>] [-k <nfsservername>] [-x <nasname>] [-y <nasdevice>] [-z <nasmount>] [-f <dnsServerName>] [-g <dnsServerIP>] [-s <pbspro>] [-q <queuename>] [-S <beegfs, nfsonmaster, otherstorage>] [-n <ganglia>] [-c <postInstallCommand>]" 1>&2; exit 1; }
+usage() { echo "Usage: $0 [-m <masterName>] [-x <nasname>] [-y <nasdevice>] [-z <nasmount>] [-f <dnsServerName>] [-g <dnsServerIP>] [-s <pbspro>] [-q <queuename>] [-S <beegfs, nfsonmaster, otherstorage>] [-n <ganglia>] [-k <nfsservername>] [-c <postInstallCommand>]" 1>&2; exit 1; }
 
 while getopts :m:S:s:q:n:c:k:x:y:z:f:g: optname; do
   log "Option $optname set with value ${OPTARG}"
