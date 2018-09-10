@@ -34,10 +34,14 @@ is_master()
 set_DNS()
 {
     sed -i  "s/PEERDNS=yes/PEERDNS=no/g" /etc/sysconfig/network-scripts/ifcfg-eth0
-	sed -i  "s/search/#search/g" /etc/resolv.conf	
+    sed -i  "s/search/#search/g" /etc/resolv.conf	
 	echo "search $DNS_SERVER_NAME">>/etc/resolv.conf	
 	echo "domain $DNS_SERVER_NAME">>/etc/resolv.conf
 	echo "nameserver $DNS_SERVER_IP">>/etc/resolv.conf
+
+    sed -i 's/required_domain="mydomain.local"/required_domain="nxad01.pttep.local"/g' /etc/dhcp/dhclient-exit-hooks.d/azure-cloud.sh
+    chmod 655 /etc/dhcp/dhclient-exit-hooks.d/azure-cloud.sh
+
 	sed -i  "s/networks:   files/networks:   files dns [NOTFOUND=return]/g"  /etc/nsswitch.conf
 	sed -i  "s/hosts:      files dns/hosts: files dns [NOTFOUND=return]/g"  /etc/nsswitch.conf
 	service network restart
