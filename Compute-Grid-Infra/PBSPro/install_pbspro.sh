@@ -34,21 +34,27 @@ is_master()
 set_DNS()
 {
     sed -i  "s/PEERDNS=yes/PEERDNS=no/g" /etc/sysconfig/network-scripts/ifcfg-eth0
+    echo "in set_DNS, updating resolv.conf"
     sed -i  "s/search/#search/g" /etc/resolv.conf
 	echo "search $DNS_SERVER_NAME">>/etc/resolv.conf	
 	echo "domain $DNS_SERVER_NAME">>/etc/resolv.conf
 	echo "nameserver $DNS_SERVER_IP">>/etc/resolv.conf
+    echo "in set_DNS, updated resolv.conf"
 
+    echo "in set_DNS, starting to write dhclient-exit-hooks"
     cat > /etc/dhcp/dhclient-exit-hooks << EOF
 #!/bin bash
 echo "search pttep.local" >>/etc/resolv.conf
 EOF
 
+    echo "in set_DNS, written dhclient-exit-hooks"
     #sed -i 's/required_domain="mydomain.local"/required_domain="nxad01.pttep.local"/g' /etc/dhcp/dhclient-exit-hooks.d/azure-cloud.sh
     chmod 755 /etc/dhcp/dhclient-exit-hooks
+    echo "in set_DNS, updated Execute permission for dhclient-exit-hooks"
 
 	sed -i  "s/networks:   files/networks:   files dns [NOTFOUND=return]/g"  /etc/nsswitch.conf
 	sed -i  "s/hosts:      files dns/hosts: files dns [NOTFOUND=return]/g"  /etc/nsswitch.conf
+    echo "in set_DNS, updated nsswitch resolv.conf, restarting network service"
 	service network restart
 }
 set_DNS
@@ -130,7 +136,31 @@ EOF
     else
 
 		set-hostname
-		set_DNS
+		
+        sed -i  "s/PEERDNS=yes/PEERDNS=no/g" /etc/sysconfig/network-scripts/ifcfg-eth0
+        echo "in HPC Node setup, updating resolv.conf"
+        sed -i  "s/search/#search/g" /etc/resolv.conf
+	    echo "search $DNS_SERVER_NAME">>/etc/resolv.conf	
+	    echo "domain $DNS_SERVER_NAME">>/etc/resolv.conf
+	    echo "nameserver $DNS_SERVER_IP">>/etc/resolv.conf
+        echo "in HPC Node setup, updated resolv.conf"
+
+        echo "in HPC Node setup, starting to write dhclient-exit-hooks"
+cat > /etc/dhcp/dhclient-exit-hooks << EOF
+#!/bin bash
+echo "search pttep.local" >>/etc/resolv.conf
+EOF
+
+        echo "in HPC Node setup, written dhclient-exit-hooks"
+        #sed -i 's/required_domain="mydomain.local"/required_domain="nxad01.pttep.local"/g' /etc/dhcp/dhclient-exit-hooks.d/azure-cloud.sh
+        chmod 755 /etc/dhcp/dhclient-exit-hooks
+        echo "in HPC Node setup, updated Execute permission for dhclient-exit-hooks"
+
+	    sed -i  "s/networks:   files/networks:   files dns [NOTFOUND=return]/g"  /etc/nsswitch.conf
+	    sed -i  "s/hosts:      files dns/hosts: files dns [NOTFOUND=return]/g"  /etc/nsswitch.conf
+        echo "in HPC Node setup, updated nsswitch resolv.conf, restarting network service"
+	    service network restart
+
         yum install -y hwloc-devel expat-devel tcl-devel expat
 
         
