@@ -43,7 +43,6 @@ set_DNS()
 
     echo "in set_DNS, starting to write dhclient-exit-hooks"
     cat > /etc/dhcp/dhclient-exit-hooks << EOF
-#!/bin bash
 echo "search pttep.local" >>/etc/resolv.conf
 EOF
 
@@ -76,7 +75,7 @@ install_pkgs()
 set-hostname()
 {
 	SERVER_IP="$(ip addr show eth0 | grep 'inet ' | cut -f2 | awk '{ print $2}')"
-	ip="$(echo ${SERVER_IP} | sed 's\/21\\g')"
+    ip="$(echo ${SERVER_IP} | sed 's\/.*\\g')"
 	hostip="$(echo ${ip} | sed 's/[.]/-/g')"
 	hostname host-"${hostip}"
 }
