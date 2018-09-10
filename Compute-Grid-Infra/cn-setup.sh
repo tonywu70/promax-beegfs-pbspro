@@ -35,7 +35,7 @@ while getopts :m:S:s:q:n:c:k:x:y:z:f:g: optname; do
 		export SCHEDULER=${OPTARG}
 		;;
 	k)  # NFSserver name
-		#export NFS_SERVER_NAME=${OPTARG}
+		export NFS_SERVER_NAME=${OPTARG}
 		;;
     n)  # monitoring
 		export MONITORING=${OPTARG}
