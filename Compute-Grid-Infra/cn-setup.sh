@@ -3,7 +3,7 @@
 # Shares
 SHARE_HOME=/share/home
 SHARE_SCRATCH=/share/scratch
-NFS_ON_MASTER=/data
+NFS_ON_MASTER=/scratch
 NFS_MOUNT=/data
 
 # User
@@ -84,27 +84,6 @@ is_ubuntu()
 	return $?
 }
 
-mount_nfs()
-{
-	log "install NFS"
-
-	if is_centos; then
-		yum -y install nfs-utils nfs-utils-lib
-	elif is_suse; then
-		zypper -n install nfs-client
-	elif is_ubuntu; then
-		apt -qy install nfs-common 
-	fi
-	
-	mkdir -p ${NFS_MOUNT}
-
-	log "mounting NFS on " ${NFS_SERVER_NAME}
-	showmount -e ${NFS_SERVER_NAME}
-	mount -t nfs ${NFS_SERVER_NAME}:${NFS_ON_MASTER} ${NFS_MOUNT}
-	
-	echo "${NFS_SERVER_NAME}:${NFS_ON_MASTER} ${NFS_MOUNT} nfs defaults,nofail  0 0" >> /etc/fstab
-}
-
 install_beegfs_client()
 {
 	bash install_beegfs.sh ${MASTER_NAME} "client"
@@ -146,8 +125,11 @@ setup_user()
 
     mkdir -p $SHARE_HOME
     mkdir -p $SHARE_SCRATCH
+    mkdir -p $NFS_ON_MASTER
+    mkdir -p $NFS_MOUNT
 
 	echo "$MASTER_NAME:$SHARE_HOME $SHARE_HOME    nfs4    rw,auto,_netdev 0 0" >> /etc/fstab
+    echo "$NFS_SERVER_NAME:$NFS_ON_MASTER $NFS_MOUNT nfs defaults,nofail  0 0" >> /etc/fstab
 	mount -a
 	mount
    
