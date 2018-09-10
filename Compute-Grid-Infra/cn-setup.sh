@@ -3,8 +3,9 @@
 # Shares
 SHARE_HOME=/share/home
 SHARE_SCRATCH=/share/scratch
-NFS_ON_MASTER=/scratch
-NFS_MOUNT=/data
+NFS_SERVER_NAME=pttnas
+NFS_ON_MASTER=/nxsdo01pool/nxsdo01pool/data
+NFS_MOUNT=/scratch
 
 # User
 HPC_USER=hpcuser
@@ -125,11 +126,10 @@ setup_user()
 
     mkdir -p $SHARE_HOME
     mkdir -p $SHARE_SCRATCH
-    mkdir -p $NFS_ON_MASTER
     mkdir -p $NFS_MOUNT
 
 	echo "$MASTER_NAME:$SHARE_HOME $SHARE_HOME    nfs4    rw,auto,_netdev 0 0" >> /etc/fstab
-    echo "$NFS_SERVER_NAME:$NFS_ON_MASTER $NFS_MOUNT nfs defaults,nofail  0 0" >> /etc/fstab
+    echo "$NFS_SERVER_NAME:$NFS_ON_MASTER $NFS_MOUNT nfs4 rsize=65536,wsize=65536,_netdev,nofail 0 0" >> /etc/fstab
 	mount -a
 	mount
    

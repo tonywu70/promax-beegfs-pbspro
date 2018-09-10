@@ -121,9 +121,10 @@ EOF
     else
 
 		set-hostname
-		yum install -y hwloc-devel expat-devel tcl-devel expat
+		set_DNS
+        yum install -y hwloc-devel expat-devel tcl-devel expat
 
-
+        
 	    rpm -ivh --nodeps /mnt/CentOS_6/pbspro-execution-14.1.2-0.x86_64.rpm
 
         cat > /etc/pbs.conf << EOF
