@@ -166,12 +166,6 @@
         "description": "Admin username on all VMs."
       }
     },
-    "adminPassword": {
-      "type": "securestring",
-      "metadata": {
-        "description": "Admin password on all VMs."
-      }
-    },
     "sshKeyData": {
       "type": "string",
       "metadata": {
@@ -183,13 +177,7 @@
       "metadata": {
         "description": "Name of master VM name"
       }
-    },
-     "nfsServerName": {
-      "type": "string",
-      "metadata": {
-        "description": "Name of VM name where NFS server is installed"
-      }
-    },
+    },     
      "vnetName": {
       "type": "string",
       "metadata": {
@@ -200,6 +188,18 @@
       "type": "string",
       "metadata": {
         "description": "Name of compute subnet as a string"
+      }
+    },
+	"nfsServerName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of VM name where NFS server is installed"
+      }
+    },
+    "adminPassword": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Admin password on all VMs."
       }
     },
     "postInstallCommand": {
