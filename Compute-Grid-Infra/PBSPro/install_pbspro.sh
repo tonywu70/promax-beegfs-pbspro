@@ -128,7 +128,7 @@ EOF
         /opt/pbs/bin/qmgr -c "set server scheduler_iteration = 120"
 
 		# add hpcuser as manager
-        /opt/pbs/bin/qmgr -c "s s managers = $PBS_MANAGER@*"
+        /opt/pbs/bin/qmgr -c "s s managers = hpcuser@*"
 
 		# list settings
 		/opt/pbs/bin/qmgr -c 'list server'
@@ -163,9 +163,9 @@ EOF
 		chkconfig --add pbs_selfregister
 
 		# if queue name is set update the self register script
-		if [ -n "$QNAME" ]; then
-			sed -i '/qname=/ s/=.*/='$QNAME'/' /etc/init.d/pbs_selfregister
-		fi
+		#if [ -n "$QNAME" ]; then
+			sed -i '/qname=/ s/=.*/='workq'/' /etc/init.d/pbs_selfregister
+		#fi
 
 		# register node
 		/etc/init.d/pbs_selfregister start

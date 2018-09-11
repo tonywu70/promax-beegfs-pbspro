@@ -128,8 +128,8 @@ setup_user()
     mkdir -p $SHARE_SCRATCH
     mkdir -p $NFS_MOUNT
 
-	echo "$MASTER_NAME:$SHARE_HOME $SHARE_HOME    nfs4    rw,auto,_netdev 0 0" >> /etc/fstab
-    echo "$NFS_SERVER_NAME:$NFS_ON_MASTER $NFS_MOUNT nfs4 rsize=65536,wsize=65536,_netdev,nofail 0 0" >> /etc/fstab
+	echo "$MASTER_NAME:$SHARE_HOME $SHARE_HOME    nfs    rw,vers=3,auto,_netdev 0 0" >> /etc/fstab
+    echo "$NFS_SERVER_NAME:$NFS_ON_MASTER $NFS_MOUNT nfs rsize=65536,wsize=65536,_netdev,nofail 0 0" >> /etc/fstab
 	mount -a
 	mount
    
