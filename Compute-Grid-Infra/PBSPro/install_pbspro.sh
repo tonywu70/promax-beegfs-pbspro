@@ -47,9 +47,10 @@ set_DNS()
 		str2="$(grep -x "#search $DNS_SERVER_NAME" /etc/resolv.conf)"
 		str3="search $DNS_SERVER_NAME"
 		str4="#search $DNS_SERVER_NAME"
-		if [ "$str1" == *"$str3"* && "$str2" != *"$str4"* ]; then		
+		if [ "$str1" == *"$str3"* && "$str2" != *"$str4"* ]; then
+		    :
 		else
-		echo "$str3" >>/etc/resolv.conf
+		    echo "$str3" >>/etc/resolv.conf
 		fi		
 EOF
 
