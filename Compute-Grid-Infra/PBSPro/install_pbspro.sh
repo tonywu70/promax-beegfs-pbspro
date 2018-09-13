@@ -43,8 +43,16 @@ set_DNS()
 
     echo "in set_DNS, starting to write dhclient-exit-hooks"
     cat > /etc/dhcp/dhclient-exit-hooks << EOF
-echo "search pttep.local" >>/etc/resolv.conf
-EOF
+		str1="$(grep -x "search pttep.local" /etc/resolv.conf)"
+		str2="$(grep -x "#search pttep.local" /etc/resolv.conf)"
+		str3="search pttep.local"
+		str4="#search pttep.local"
+		if [ "$str1" == *"$str3"* && "$str2" != *"$str4"* ]; then
+		echo "Dont Add"
+		else
+		echo "$str3" >>/etc/resolv.conf
+		fi	
+	EOF
 
     echo "in set_DNS, written dhclient-exit-hooks"
     #sed -i 's/required_domain="mydomain.local"/required_domain="nxad01.pttep.local"/g' /etc/dhcp/dhclient-exit-hooks.d/azure-cloud.sh
