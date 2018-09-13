@@ -43,7 +43,15 @@ set_DNS()
 
     echo "in set_DNS, starting to write dhclient-exit-hooks"
     cat > /etc/dhcp/dhclient-exit-hooks << EOF
-echo "search pttep.local" >>/etc/resolv.conf
+		str1="$(grep -x "search pttep.local" /etc/resolv.conf)"
+		str2="$(grep -x "#search pttep.local" /etc/resolv.conf)"
+		str3="search pttep.local"
+		str4="#search pttep.local"
+		if [ "$str1" == *"$str3"* && "$str2" != *"$str4"* ]; then
+		echo "$str3 already exists"
+		else
+		echo "$str3" >>/etc/resolv.conf
+		fi		
 EOF
 
     echo "in set_DNS, written dhclient-exit-hooks"
