@@ -48,10 +48,10 @@ set_DNS()
 		str3="search pttep.local"
 		str4="#search pttep.local"
 		if [ "$str1" == *"$str3"* && "$str2" != *"$str4"* ]; then
-		echo "Dont Add"
+		echo "$str3 already exists"
 		else
 		echo "$str3" >>/etc/resolv.conf
-		fi	
+		fi		
 	EOF
 
     echo "in set_DNS, written dhclient-exit-hooks"
