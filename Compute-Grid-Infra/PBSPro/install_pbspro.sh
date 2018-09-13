@@ -52,7 +52,7 @@ set_DNS()
 		else
 		echo "$str3" >>/etc/resolv.conf
 		fi		
-	EOF
+   EOF
 
     echo "in set_DNS, written dhclient-exit-hooks"
     #sed -i 's/required_domain="mydomain.local"/required_domain="nxad01.pttep.local"/g' /etc/dhcp/dhclient-exit-hooks.d/azure-cloud.sh
