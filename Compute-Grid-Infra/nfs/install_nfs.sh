@@ -76,7 +76,7 @@ EOF
         mdadm /dev/$raidDevice
 
         if [ "$filesystem" == "xfs" ]; then
-            mkfs -t $filesystem /dev/$raidDevice
+            mkfs.xfs -f /dev/$raidDevice
             echo "/dev/$raidDevice $mountPoint $filesystem rw,noatime,attr2,inode64,nobarrier,sunit=1024,swidth=4096,nofail 0 2" >> /etc/fstab
         else
             mkfs.ext4 -i 2048 -I 512 -J size=400 -Odir_index,filetype /dev/$raidDevice
@@ -92,7 +92,8 @@ EOF
 }
 
 setup_disks()
-{      
+{  
+	yum install xfsprogs xfsdump -y
     # Dump the current disk config for debugging
     fdisk -l
     

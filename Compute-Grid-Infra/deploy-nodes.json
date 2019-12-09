@@ -51,11 +51,47 @@
       "allowedValues": [
         "none",
         "beegfs",
-        "nfsonmaster"
+        "nfsonmaster",
+        "otherstorage"
       ],
       "metadata": {
         "description": "specify the shared storage to be used. beegfs=> beegfs cluster, nfsonmaster=> nfs share on the master"
       }
+    },
+    "nasName": {
+      "type": "string",
+      "metadata": {
+        "description": "Provide NAS name"
+      },
+      "maxLength": 15
+    },
+    "nasDevice": {
+      "type": "string",
+      "metadata": {
+        "description": "Provide nas device name"
+      },
+      "maxLength": 30
+    },
+    "nasMountPoint": {
+      "type": "string",
+      "metadata": {
+        "description": "Provide mount point"
+      },
+      "maxLength": 30
+    },
+    "dnsServerName": {
+      "type": "string",
+      "metadata": {
+        "description": "DNS server name"
+      },
+      "maxLength": 40
+    },
+    "dnsServerIP": {
+      "type": "string",
+      "metadata": {
+        "description": "DNS server ip"  
+      },
+      "maxLength": 20
     },
     "scheduler": {
       "type": "string",
@@ -130,12 +166,6 @@
         "description": "Admin username on all VMs."
       }
     },
-    "adminPassword": {
-      "type": "securestring",
-      "metadata": {
-        "description": "Admin password on all VMs."
-      }
-    },
     "sshKeyData": {
       "type": "string",
       "metadata": {
@@ -147,7 +177,7 @@
       "metadata": {
         "description": "Name of master VM name"
       }
-    },
+    },     
      "vnetName": {
       "type": "string",
       "metadata": {
@@ -158,6 +188,18 @@
       "type": "string",
       "metadata": {
         "description": "Name of compute subnet as a string"
+      }
+    },
+	"nfsServerName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of VM name where NFS server is installed"
+      }
+    },
+    "adminPassword": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Admin password on all VMs."
       }
     },
     "postInstallCommand": {
@@ -176,6 +218,8 @@
   "variables": {
     "location": "[resourceGroup().location]",
     "newStorageAccountSuffix": "[toLower(parameters('vmSSPrefix'))]",
+    "longNamingInfix": "[toLower(parameters('vmSSPrefix'))]",
+    "vmSSPrefix": "[toLower(parameters('vmSSPrefix'))]",
     "deploymentApiVersion": "2015-11-01",
     "nodeSettings": {
       "VMsku": "[parameters('VMsku')]",
@@ -183,8 +227,14 @@
       "vnetName": "[parameters('vnetName')]",
       "subnetName": "[parameters('Computesubnet')]",
       "MasterName": "[parameters('masterName')]",
+      "nfsservername": "[parameters('nfsServerName')]",
       "storageAccountType": "Standard_LRS",
       "sharedStorage": "[parameters('sharedStorage')]",
+      "nasname": "[parameters('nasName')]",
+      "nasdevice": "[parameters('nasDevice')]",
+      "mountPoint": "[parameters('nasMountPoint')]",
+      "dnsServerName": "[parameters('dnsServerName')]",
+      "dnsServerIP": "[parameters('dnsServerIP')]",
       "scheduler": "[parameters('scheduler')]",
       "monitoring": "[parameters('monitoring')]"
     },

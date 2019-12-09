@@ -20,7 +20,8 @@
     "networkApiVersion": "2016-09-01",
     "storageApiVersion": "2015-06-15",
     "vnetID": "[resourceId(parameters('networkSettings').vnetRG, 'Microsoft.Network/virtualNetworks', parameters('networkSettings').virtualNetworkName)]",
-    "infraSubnetRef": "[concat(variables('vnetID'),'/subnets/', parameters('networkSettings').infraSubnet)]"
+    "infraSubnetRef": "[concat(variables('vnetID'),'/subnets/', parameters('networkSettings').infraSubnet)]",
+    "ComputeSubnetRef": "[concat(variables('vnetID'),'/subnets/', parameters('networkSettings').computeSubnet)]"
   },
   "resources": [
     {
@@ -59,12 +60,10 @@
           {
             "name": "[parameters('masterSettings').IPConfigName]",
             "properties": {
-              "privateIPAllocationMethod": "Dynamic",
-              "publicIPAddress": {
-                "id": "[resourceId('Microsoft.Network/publicIPAddresses',parameters('masterSettings').publicIPAddressName)]"
-              },
+              "privateIPAllocationMethod": "Static", 
+               "privateIPAddress": "10.0.0.135",             
               "subnet": {
-                "id": "[variables('infraSubnetRef')]"
+                "id": "[variables('ComputeSubnetRef')]"
               }
             }
           }

@@ -3,8 +3,9 @@
 # Shares
 SHARE_HOME=/share/home
 SHARE_SCRATCH=/share/scratch
-NFS_ON_MASTER=/data
-NFS_MOUNT=/data
+NFS_SERVER_NAME=pttnas
+NFS_ON_MASTER=/nxsdo01pool/nxsdo01pool/data
+NFS_MOUNT=/scratch
 
 # User
 HPC_USER=hpcuser
@@ -18,26 +19,44 @@ log()
 	echo "$1"
 }
 
-usage() { echo "Usage: $0 [-m <masterName>] [-s <pbspro>] [-q <queuename>] [-S <beegfs, nfsonmaster>] [-n <ganglia>] [-c <postInstallCommand>]" 1>&2; exit 1; }
+usage() { echo "Usage: $0 [-m <masterName>] [-x <nasname>] [-y <nasdevice>] [-z <nasmount>] [-f <dnsServerName>] [-g <dnsServerIP>] [-s <pbspro>] [-q <queuename>] [-S <beegfs, nfsonmaster, otherstorage>] [-n <ganglia>] [-c <postInstallCommand>] [-k <nfsservername>]" 1>&2; exit 1; }
 
-while getopts :m:S:s:q:n:c: optname; do
+while getopts :m:S:s:q:n:c:x:y:z:f:g:k: optname; do
   log "Option $optname set with value ${OPTARG}"
   
   case $optname in
     m)  # master name
 		export MASTER_NAME=${OPTARG}
 		;;
-    S)  # Shared Storage (beegfs, nfsonmaster)
+    S)  # Shared Storage (beegfs, nfsonmaster, otherstorage)
 		export SHARED_STORAGE=${OPTARG}
 		;;
     s)  # Scheduler (pbspro)
 		export SCHEDULER=${OPTARG}
+		;;
+	k)  # NFSserver name
+		export NFS_SERVER_NAME=${OPTARG}
 		;;
     n)  # monitoring
 		export MONITORING=${OPTARG}
 		;;
     c)  # post install command
 		export POST_INSTALL_COMMAND=${OPTARG}
+		;;
+	x)  # nas name
+		export NAS_NAME=${OPTARG}
+		;;
+	y)  # nas device
+		export NAS_DEVICE=${OPTARG}
+		;;
+	z)  # mount point
+		export NAS_MOUNT=${OPTARG}
+		;;
+	f)  # dns name
+		export DNS_NAME=${OPTARG}
+		;;
+	g)  # dns ip
+		export DNS_IP=${OPTARG}
 		;;
     q)  # queue name
 		export QNAME=${OPTARG}
@@ -66,30 +85,14 @@ is_ubuntu()
 	return $?
 }
 
-mount_nfs()
-{
-	log "install NFS"
-
-	if is_centos; then
-		yum -y install nfs-utils nfs-utils-lib
-	elif is_suse; then
-		zypper -n install nfs-client
-	elif is_ubuntu; then
-		apt -qy install nfs-common 
-	fi
-	
-	mkdir -p ${NFS_MOUNT}
-
-	log "mounting NFS on " ${MASTER_NAME}
-	showmount -e ${MASTER_NAME}
-	mount -t nfs ${MASTER_NAME}:${NFS_ON_MASTER} ${NFS_MOUNT}
-	
-	echo "${MASTER_NAME}:${NFS_ON_MASTER} ${NFS_MOUNT} nfs defaults,nofail  0 0" >> /etc/fstab
-}
-
 install_beegfs_client()
 {
 	bash install_beegfs.sh ${MASTER_NAME} "client"
+}
+install_otherstorage()
+{
+	bash other_nas.sh ${NAS_NAME} ${NAS_DEVICE} ${NAS_MOUNT}
+	echo "other storage is installed"
 }
 
 install_ganglia()
@@ -99,7 +102,7 @@ install_ganglia()
 
 install_pbspro()
 {
-	bash install_pbspro.sh ${MASTER_NAME} ${QNAME}
+	bash install_pbspro.sh ${MASTER_NAME} ${QNAME} ${DNS_NAME} ${DNS_IP}
 }
 
 install_blobxfer()
@@ -110,7 +113,7 @@ install_blobxfer()
 		pip install --upgrade blobxfer
 	fi
 }
-
+echo "${NAS_NAME} ${NAS_DEVICE} ${NAS_MOUNT}"
 setup_user()
 {
 	if is_centos; then
@@ -123,8 +126,10 @@ setup_user()
 
     mkdir -p $SHARE_HOME
     mkdir -p $SHARE_SCRATCH
+    mkdir -p $NFS_MOUNT
 
-	echo "$MASTER_NAME:$SHARE_HOME $SHARE_HOME    nfs4    rw,auto,_netdev 0 0" >> /etc/fstab
+	echo "$MASTER_NAME:$SHARE_HOME $SHARE_HOME    nfs    rw,vers=3,auto,_netdev 0 0" >> /etc/fstab
+    echo "$NFS_SERVER_NAME:$NFS_ON_MASTER $NFS_MOUNT nfs rsize=65536,wsize=65536,_netdev,nofail 0 0" >> /etc/fstab
 	mount -a
 	mount
    
@@ -191,7 +196,10 @@ fi
 if [ "$SHARED_STORAGE" == "beegfs" ]; then
 	install_beegfs_client
 elif [ "$SHARED_STORAGE" == "nfsonmaster" ]; then
-	mount_nfs
+		mount_nfs
+elif [ "$SHARED_STORAGE" == "otherstorage" ]; then
+		echo "other storage is installing"
+		install_otherstorage
 fi
 
 setup_intel_mpi
